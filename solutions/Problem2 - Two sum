@@ -1,0 +1,55 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) 
+    {
+        std::vector<int> answer ;
+        std::unordered_map<int, int> elem_2_location ; 
+        int location = 0 ; 
+        for (auto i : nums) 
+        {
+            // target = a+b ; or b = target -a ;
+            if ( elem_2_location.find(target - i) != elem_2_location.end()
+                && (i == (target - i )) )
+            {
+                answer.push_back(location) ;   
+                answer.push_back(elem_2_location[target - i]) ;  
+                return answer;               
+            }
+            elem_2_location[i] = location ; 
+            if (elem_2_location.find(target - i) != elem_2_location.end() && (location != elem_2_location[target - i]))
+            {
+                answer.push_back(location) ;   
+                answer.push_back(elem_2_location[target - i]) ;               
+            }
+            location ++ ; 
+        }
+        return answer ; 
+    }
+};
+
+
+
+Optimized solution 
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int> output;
+        int temp1= target, sum1, sum2, sum;
+        for(int i=0; i<nums.size(); i++)
+        {
+            sum1= nums[i];
+            for(int j=i+1; j<nums.size(); j++)
+            {
+                sum2=nums[j];
+                sum = sum1+ sum2;
+                if(sum==target)
+                {
+                    output.push_back(i);
+                    output.push_back(j);  
+                }
+            }
+        }
+        return output;
+    }
+};
